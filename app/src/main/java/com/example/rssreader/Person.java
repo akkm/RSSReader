@@ -7,10 +7,12 @@ package com.example.rssreader;
 public class Person {
 	private final String name;
 	private final int age;
+	private final String comment;
 
-	public Person(String name, int age) {
+	public Person(String name, int age, String comment) {
 		this.name = name;
 		this.age = age;
+		this.comment = comment;
 	}
 
 	/**
@@ -25,5 +27,12 @@ public class Person {
 	 */
 	public int getAge() {
 		return age;
+	}
+
+	/**
+	 * コメントを返します
+	 */
+	public String getComment() {
+		return comment;
 	}
 }
