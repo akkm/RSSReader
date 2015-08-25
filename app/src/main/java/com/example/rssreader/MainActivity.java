@@ -29,9 +29,7 @@ public class MainActivity extends ActionBarActivity {
         // TODO List<Integer> を List<Person> に変更しよう
         List<Integer> numberList = new ArrayList<>();
 
-        for (int i = 0 ; i < 30 ; i++) {  // TODO List<Person> に好きな Person を追加しよう
-            numberList.add(i);
-        }
+        // TODO List<Person> に好きな Person を追加しよう
 
         // TODO 自作の Adapter を使いように変更しよう
         mListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, numberList);
