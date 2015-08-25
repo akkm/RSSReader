@@ -26,14 +26,14 @@ public class MainActivity extends ActionBarActivity {
 
         mListView = (ListView) findViewById(R.id.listView);
 
-        // 0 ~ 29 の数字のリストを作成
+        // TODO List<Integer> を List<Person> に変更しよう
         List<Integer> numberList = new ArrayList<>();
 
-        for (int i = 0 ; i < 30 ; i++) {
+        for (int i = 0 ; i < 30 ; i++) {  // TODO List<Person> に好きな Person を追加しよう
             numberList.add(i);
         }
-        // ここまで
 
+        // TODO 自作の Adapter を使いように変更しよう
         mListAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, numberList);
 
         mListView.setAdapter(mListAdapter);
