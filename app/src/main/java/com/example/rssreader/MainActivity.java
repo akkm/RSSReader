@@ -1,6 +1,8 @@
 package com.example.rssreader;
 
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<FeedItem>> {
 
     private ListView mListView;
     private MyAdapter mListAdapter;
@@ -63,5 +65,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<List<FeedItem>> onCreateLoader(int id, Bundle args) {
+        FeedAsyncTaskLoader loader = new FeedAsyncTaskLoader(this);
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<FeedItem>> loader, List<FeedItem> data) {
+        mListAdapter.addAll(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<FeedItem>> loader) {
+
     }
 }
