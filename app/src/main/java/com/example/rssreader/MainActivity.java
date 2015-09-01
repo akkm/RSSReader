@@ -28,13 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.listView);
 
-        // TODO: mItemList に ArrayList を作成しよう
         mItemList = new ArrayList<>();
 
-        // TODO: List<FeedItem> に好きな FeedItem を追加しよう
-        mItemList.add(new FeedItem("大ニュースです！", "これはすごい", "スクープ", "2015/9/1"));
-
-        // TODO: MyAdapter に List<FeedItem> を渡そう
         mListAdapter = new MyAdapter(this, mItemList);
 
         mListView.setAdapter(mListAdapter);
@@ -42,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), position + "番目がタップされました", Toast.LENGTH_SHORT)
+                Toast.makeText(getApplicationContext(), position + 1 + "番目がタップされました", Toast.LENGTH_SHORT)
                         .show();
             }
         });
