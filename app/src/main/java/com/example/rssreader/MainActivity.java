@@ -17,6 +17,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<FeedItem>> {
 
+    private static final int FEED_LOADER_ID = 1;
     private ListView mListView;
     private MyAdapter mListAdapter;
 
@@ -43,6 +44,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         .show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getSupportLoaderManager().initLoader(FEED_LOADER_ID, null, this);
     }
 
     @Override
