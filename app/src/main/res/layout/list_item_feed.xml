@@ -8,24 +8,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-        android:text="タイトル"/>
+        android:text="タイトル"
+        android:layout_marginTop="2dp"
+        android:textSize="16sp"
+        android:textColor="#2e2e2e"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/description"
-        android:text="概要"/>
+        android:text="概要"
+        android:layout_below="@id/title"
+        android:layout_marginTop="12dp"
+        android:textSize="12sp"
+        android:textColor="#666666"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/category"
-        android:text="カテゴリ"/>
+        android:text="カテゴリ"
+        android:layout_below="@id/description"
+        android:layout_marginTop="12dp"
+        android:textSize="12sp"
+        android:textColor="#b5b5b5"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/date"
-        android:text="日付"/>
+        android:text="日付"
+        android:layout_below="@id/description"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentRight="true"
+        android:textSize="12sp"
+        android:textColor="#b5b5b5"
+        android:drawableLeft="@mipmap/rss_reader_time"
+        android:drawablePadding="5dp"/>
 
 </RelativeLayout>

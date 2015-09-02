@@ -9,6 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private MyAdapter mListAdapter;
 
     // TODO: List<FeedItem> というフィールドmItemListを作成しよう
+    private List<FeedItem> mItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.listView);
 
         // TODO: mItemList に ArrayList を作成しよう
+        mItemList = new ArrayList<>();
 
         // TODO: List<FeedItem> に好きな FeedItem を追加しよう
+        mItemList.add(new FeedItem("大ニュースです！", "これはすごい", "スクープ", "2015/9/1"));
 
         // TODO: MyAdapter に List<FeedItem> を渡そう
-        mListAdapter = new MyAdapter(this, null);
+        mListAdapter = new MyAdapter(this, mItemList);
 
         mListView.setAdapter(mListAdapter);
 
@@ -41,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
