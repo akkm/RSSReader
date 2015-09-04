@@ -1,6 +1,8 @@
 package com.example.rssreader;
 
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,8 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<FeedItem>> {
 
+    private static final int FEED_LOADER_ID = 1;
     private ListView mListView;
     private MyAdapter mListAdapter;
 
@@ -28,13 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.listView);
 
-        // TODO: mItemList に ArrayList を作成しよう
         mItemList = new ArrayList<>();
 
-        // TODO: List<FeedItem> に好きな FeedItem を追加しよう
-        mItemList.add(new FeedItem("大ニュースです！", "これはすごい", "スクープ", "2015/9/1"));
-
-        // TODO: MyAdapter に List<FeedItem> を渡そう
         mListAdapter = new MyAdapter(this, mItemList);
 
         mListView.setAdapter(mListAdapter);
@@ -42,10 +40,16 @@ public class MainActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), position + "番目がタップされました", Toast.LENGTH_SHORT)
+                Toast.makeText(getApplicationContext(), position + 1 + "番目がタップされました", Toast.LENGTH_SHORT)
                         .show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getSupportLoaderManager().initLoader(FEED_LOADER_ID, null, this);
     }
 
     @Override
@@ -68,5 +72,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<List<FeedItem>> onCreateLoader(int id, Bundle args) {
+        FeedAsyncTaskLoader loader = new FeedAsyncTaskLoader(this);
+        return loader;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<FeedItem>> loader, List<FeedItem> data) {
+        mListAdapter.addAll(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<FeedItem>> loader) {
+
     }
 }
