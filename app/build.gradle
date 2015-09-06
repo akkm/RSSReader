@@ -19,8 +19,13 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://android-rome-feed-reader.googlecode.com/svn/maven2/releases' }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.google.code.android-rome-feed-reader:android-rome-feed-reader:1.0.0-r2'
 }
