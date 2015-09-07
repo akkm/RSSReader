@@ -26,7 +26,7 @@ public class FeedItem {
         this.category = category;
         this.date = date;
     }
-    
+
     public String getTitle() {
         return title;
     }
