@@ -20,6 +20,7 @@ android {
 }
 
 repositories {
+    jcenter()
     maven { url 'https://android-rome-feed-reader.googlecode.com/svn/maven2/releases' }
 }
 

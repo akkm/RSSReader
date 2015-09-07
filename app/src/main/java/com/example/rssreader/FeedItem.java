@@ -2,10 +2,6 @@ package com.example.rssreader;
 
 import android.net.Uri;
 
-import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
-
-import java.net.URI;
-
 /**
  * Created by atsuto.yamada on 2015/08/31.
  */
@@ -30,15 +26,7 @@ public class FeedItem {
         this.category = category;
         this.date = date;
     }
-
-    public FeedItem(SyndEntry entry) {
-        if (entry!=null) {
-            this.title = entry.getTitle();
-            this.description = (entry.getDescription() != null) ? entry.getDescription().getValue() : null;
-            this.date = (entry.getPublishedDate() != null) ? entry.getPublishedDate().toString() : null;
-        }
-    }
-
+    
     public String getTitle() {
         return title;
     }
