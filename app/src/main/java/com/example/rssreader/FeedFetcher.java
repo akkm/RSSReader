@@ -37,13 +37,13 @@ public class FeedFetcher {
 
         try {
             Response response = client.newCall(request).execute();
-            String result = response.body().string();
+            String result = response.body().string(); // TODO この result を整形して、List<FeedItem> を生成しよう
             Log.d("FeedFetcher", result);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("FeedFetcher", "something went wrong on ");
         }
 
-        List<FeedItem> result = new ArrayList<>();
+        List<FeedItem> result = new ArrayList<>(); // TODO このダミーデータは必要なくなるので消す
         result.add(new FeedItem("最初の大ニュースです！", "これはすごい", "スクープ", "2015/9/1"));
         result.add(new FeedItem("次の大ニュースです！", "これはすごいこれはすごい", "スクープ", "2015/9/1"));
         return result;
