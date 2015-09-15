@@ -74,6 +74,11 @@ public class FeedItem {
         return uri;
     }
 
+    public String getUriString() {
+        if (uri == null) return null;
+        return uri.toString();
+    }
+
     public void setUri(Uri uri) {
         this.uri = uri;
     }
