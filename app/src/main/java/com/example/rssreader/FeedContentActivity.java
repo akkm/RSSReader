@@ -1,6 +1,5 @@
 package com.example.rssreader;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -18,11 +17,8 @@ public class FeedContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_content);
         WebView webView = (WebView) findViewById(R.id.webView);
-        Intent intent = getIntent();
-        if (intent != null) {
-            String url = intent.getStringExtra(URI_PARAM);
-            webView.loadUrl(url);
-        }
+        // TODO: Intentを取得
+        // TODO: webViewのloadUrlに受け取ったurlを渡す
     }
 
     @Override
