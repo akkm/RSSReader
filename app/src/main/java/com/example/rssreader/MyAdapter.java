@@ -25,12 +25,17 @@ public class MyAdapter extends ArrayAdapter<FeedItem> {
 		TextView category = (TextView) view.findViewById(R.id.category);
 		TextView date = (TextView) view.findViewById(R.id.date);
 
-		FeedItem item = getItem(position);
+		final FeedItem item = getItem(position);
 
 		title.setText(item.getTitle());
 		description.setText(item.getDescription());
 		category.setText(item.getCategory());
 		date.setText(item.getDate());
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			}
+		});
 
 		return view;
 	}
