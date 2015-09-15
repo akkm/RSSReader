@@ -12,6 +12,7 @@ public class FeedContentActivity extends AppCompatActivity {
 
     private static final String TAG = FeedContentActivity.class.getSimpleName();
     public static final String URI_PARAM = "url";
+    private String mUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +23,8 @@ public class FeedContentActivity extends AppCompatActivity {
         Intent intent = getIntent();
         // TODO: webViewのloadUrlに受け取ったurlを渡す
         if (intent != null) {
-            String url = intent.getStringExtra(URI_PARAM);
-            webView.loadUrl(url);
+            mUrl = intent.getStringExtra(URI_PARAM);
+            webView.loadUrl(mUrl);
         }
     }
 
@@ -43,6 +44,15 @@ public class FeedContentActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.share) {
+            Intent intent = new Intent();
+
+            intent.setAction(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, mUrl);
+            this.startActivity(intent);
             return true;
         }
 
