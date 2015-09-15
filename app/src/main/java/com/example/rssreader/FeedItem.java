@@ -30,10 +30,11 @@ public class FeedItem {
     }
 
     public FeedItem(SyndEntry entry) {
-        if (entry!=null) {
+        if (entry != null) {
             this.title = entry.getTitle();
             this.description = (entry.getDescription() != null) ? entry.getDescription().getValue() : null;
             this.date = (entry.getPublishedDate() != null) ? entry.getPublishedDate().toString() : null;
+            this.uri = (entry.getLink() != null) ? Uri.parse(entry.getLink()) : null;
         }
     }
 
