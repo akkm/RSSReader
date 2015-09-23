@@ -1,6 +1,7 @@
 package com.example.rssreader;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -25,12 +26,22 @@ public class MyAdapter extends ArrayAdapter<FeedItem> {
 		TextView category = (TextView) view.findViewById(R.id.category);
 		TextView date = (TextView) view.findViewById(R.id.date);
 
-		FeedItem item = getItem(position);
+		final FeedItem item = getItem(position);
 
 		title.setText(item.getTitle());
 		description.setText(item.getDescription());
 		category.setText(item.getCategory());
 		date.setText(item.getDate());
+		view.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Context context = v.getContext();
+				Intent i = new Intent(context, FeedContentActivity.class);
+				i.putExtra(FeedContentActivity.URI_PARAM, item.getUriString());
+				context.startActivity(i);
+			}
+		});
 
 		return view;
 	}
