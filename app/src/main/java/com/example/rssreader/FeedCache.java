@@ -27,7 +27,7 @@ public class FeedCache {
     * キャッシュファイルが存在すれば、キャッシュがあるという判断をするメソッド
     * */
     public boolean exists() {
-        String filepath = context.getFilesDir().getAbsolutePath() + "/" + CACHE_FILE_NAME;
+        String filepath = context.getCacheDir().getAbsolutePath() + "/" + CACHE_FILE_NAME;
         File file = new File(filepath);
         return file.exists();
     }
@@ -36,7 +36,9 @@ public class FeedCache {
         List<FeedItem> items = new ArrayList<>();
 
         try {
-            FileInputStream inputStream = context.openFileInput(CACHE_FILE_NAME);
+            File file = new File(context.getCacheDir(), CACHE_FILE_NAME);
+            FileInputStream inputStream = new FileInputStream(file);
+
             byte[] buffer = new byte[inputStream.available()];
             int result = inputStream.read(buffer);
             inputStream.close();
@@ -56,10 +58,9 @@ public class FeedCache {
     }
 
     public void write(String feedString) {
-        File file = new File(context.getCacheDir(), CACHE_FILE_NAME);
-
         try {
-            FileOutputStream outputStream = context.openFileOutput(CACHE_FILE_NAME, Context.MODE_PRIVATE);
+            File file = new File(context.getCacheDir(), CACHE_FILE_NAME);
+            FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(feedString.getBytes());
             outputStream.close();
         } catch (Exception e) {
