@@ -44,6 +44,11 @@ public class FeedFetcher {
         try {
             Response response = client.newCall(request).execute();
             String result = response.body().string();
+
+            // 取得したらキャッシュに書き込む
+            FeedCache cache = new FeedCache(context);
+            cache.write(result);
+
             return parseRss(result);
         } catch (IOException e) {
             Log.e("FeedFetcher", "something went wrong on ");
@@ -51,7 +56,7 @@ public class FeedFetcher {
         }
     }
 
-    private List<FeedItem> parseRss(String rss) {
+    public List<FeedItem> parseRss(String rss) {
         List<FeedItem> items = new ArrayList<>();
         SyndFeedInput input = new SyndFeedInput();
 
