@@ -49,7 +49,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     protected void onStart() {
         super.onStart();
-        getSupportLoaderManager().initLoader(FEED_LOADER_ID, null, this);
+
+        // キャッシュがあれば利用する
+        FeedCache cache = new FeedCache(this);
+        if (cache.exists()) {
+            mListAdapter.addAll(cache.read());
+        }
+        else {
+            // なければインターネット上から取得する
+            getSupportLoaderManager().initLoader(FEED_LOADER_ID, null, this);
+        }
     }
 
     @Override
