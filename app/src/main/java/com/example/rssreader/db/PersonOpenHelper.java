@@ -80,8 +80,12 @@ public class PersonOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = null;
         Cursor cursor = null;
         try {
-            // TODO SQLiteDatabaseを取得
-            // TODO query実行
+            db = getReadableDatabase();
+            cursor = db.query(
+                    TABLE_NAME,
+                    new String[]{COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_AGE, COLUMN_NAME_COMMENT},
+                    COLUMN_NAME_ID + "=?", new String[]{String.valueOf(id)}, null, null,COLUMN_NAME_ID
+            );
             boolean hasNext = cursor.moveToFirst();
             if (!hasNext) {
                 return null;
