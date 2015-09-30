@@ -134,11 +134,14 @@ public class PersonOpenHelper extends SQLiteOpenHelper {
     public boolean update(PersonEntity person) {
         SQLiteDatabase db = null;
         try {
-            // TODO SQLiteDatabaseを取得
+            db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            // TODO ContentValuesにpersonの値を入れる
-            // TODO update実行
-            return false;
+            values.put(COLUMN_NAME_NAME, person.getName());
+            values.put(COLUMN_NAME_AGE, person.getAge());
+            values.put(COLUMN_NAME_COMMENT, person.getComment());
+            int updateCount = db.update(TABLE_NAME, values, COLUMN_NAME_ID + "= ?", new String[]{String.valueOf(person.getId())});
+            if (updateCount <= 0) return false;
+            return true;
         } finally {
             if (db != null) db.close();
         }
