@@ -49,11 +49,21 @@ public class PersonOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
         List<PersonEntity> list = new ArrayList<>();
         try {
-            // TODO SQLiteDatabaseを取得
-            // TODO query実行
+            db = getReadableDatabase();
+            cursor = db.query(
+                    TABLE_NAME,
+                    new String[]{COLUMN_NAME_ID, COLUMN_NAME_NAME, COLUMN_NAME_AGE, COLUMN_NAME_COMMENT},
+                    null, null, null, null, COLUMN_NAME_ID
+            );
             boolean hasNext = cursor.moveToFirst();
             while (hasNext) {
-                //TODO ORマッピング
+                PersonEntity person = PersonEntity.getBuilder()
+                        .setId(cursor.getLong(cursor.getColumnIndex(COLUMN_NAME_ID)))
+                        .setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_NAME)))
+                        .setAge(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_AGE)))
+                        .setComment(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_COMMENT)))
+                        .build();
+                list.add(person);
                 hasNext = cursor.moveToNext();
             }
 
