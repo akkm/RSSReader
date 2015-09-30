@@ -20,8 +20,12 @@ public class PersonOpenHelper extends SQLiteOpenHelper {
     private static final String COLUMN_NAME_NAME = "name";
     private static final String COLUMN_NAME_AGE = "age";
     private static final String COLUMN_NAME_COMMENT = "comment";
-    // TODO create文を記述
-    private static final String CREATE_PERSON_TABLE = "";
+    private static final String CREATE_PERSON_TABLE = "create table " + TABLE_NAME + "(" +
+            " _id integer PRIMARY KEY AUTOINCREMENT," +
+            " name text not null," +
+            " age integer not null," +
+            " comment text" +
+            ");";
 
     private static final String TAG = PersonOpenHelper.class.getSimpleName();
 
@@ -31,7 +35,7 @@ public class PersonOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO テーブル作成をする
+        db.execSQL(CREATE_PERSON_TABLE);
     }
 
     @Override
