@@ -112,11 +112,14 @@ public class PersonOpenHelper extends SQLiteOpenHelper {
     public long insert(PersonEntity person) {
         SQLiteDatabase db = null;
         try {
-            // TODO SQLiteDatabaseを取得
+            db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            // TODO ContentValuesにpersonの値を入れる
-            // TODO insert実行
-            return 0;
+            values.put(COLUMN_NAME_NAME, person.getName());
+            values.put(COLUMN_NAME_AGE, person.getAge());
+            values.put(COLUMN_NAME_COMMENT, person.getComment());
+            long id = db.insert(TABLE_NAME, "", values);
+            if (id < 0) return PersonEntity.UNDEFINED;
+            return id;
         } finally {
             if (db != null) db.close();
         }
