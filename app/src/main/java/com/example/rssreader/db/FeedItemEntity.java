@@ -6,6 +6,7 @@ import com.example.rssreader.FeedItem;
 import com.google.code.rome.android.repackaged.com.sun.syndication.feed.synd.SyndEntry;
 
 /**
+ * DBで記事を扱うためのクラス
  * Created by takafumi.nanao on 10/2/15.
  */
 public class FeedItemEntity extends FeedItem {
@@ -31,7 +32,7 @@ public class FeedItemEntity extends FeedItem {
     }
 
     public static class Builder {
-        private long id;
+        private long id = UNDEFINED;
 
         private String title;
         private String description;

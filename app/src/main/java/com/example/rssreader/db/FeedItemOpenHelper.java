@@ -31,7 +31,7 @@ public class FeedItemOpenHelper extends SQLiteOpenHelper {
             COLUMN_NAME_DESCRIPTION + " text," +
             COLUMN_NAME_CATEGORY + " text," +
             COLUMN_NAME_DATE + " text," +
-            COLUMN_NAME_URI + " text not null," +
+            COLUMN_NAME_URI + " text not null" +
             ");";
 
     public FeedItemOpenHelper(Context context) {
@@ -83,21 +83,44 @@ public class FeedItemOpenHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public long insert(FeedItemEntity feedItem) {
+    public boolean insertList(List<FeedItemEntity> list) {
+        boolean result = true;
         SQLiteDatabase db = null;
         try {
             db = getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(COLUMN_NAME_TITLE, feedItem.getTitle());
-            values.put(COLUMN_NAME_DESCRIPTION, feedItem.getDescription());
-            values.put(COLUMN_NAME_CATEGORY, feedItem.getCategory());
-            values.put(COLUMN_NAME_DATE, feedItem.getDate());
-            values.put(COLUMN_NAME_URI, feedItem.getUri().toString());
-            long id = db.insert(TABLE_NAME, "", values);
-            if (id < 0) return FeedItemEntity.UNDEFINED;
-            return id;
+            for (FeedItemEntity feedItem: list) {
+                values.clear();
+                values.put(COLUMN_NAME_TITLE, feedItem.getTitle());
+                values.put(COLUMN_NAME_DESCRIPTION, feedItem.getDescription());
+                values.put(COLUMN_NAME_CATEGORY, feedItem.getCategory());
+                values.put(COLUMN_NAME_DATE, feedItem.getDate());
+                values.put(COLUMN_NAME_URI, feedItem.getUri().toString());
+                db.insert(TABLE_NAME, "", values);
+            }
+        }catch (Exception e) {
+            result = false;
         } finally {
             if (db != null) db.close();
         }
+        return result;
+    }
+
+    public int selectAllCount() {
+        int count = 0;
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        try {
+            db = getReadableDatabase();
+            String sql = "SELECT COUNT(*) FROM feed";
+            cursor = db.rawQuery(sql, null);
+            cursor.moveToFirst();
+            count= cursor.getInt(0);
+        } finally {
+            if (cursor != null) cursor.close();
+            if (db != null) db.close();
+        }
+
+        return count;
     }
 }

@@ -7,14 +7,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.rssreader.db.FeedItemEntity;
+
 import java.util.List;
 
 /**
  * TODO ArrayAdapter を継承して、独自の Adapter をつくろう
  * @author KeishinYokomaku
  */
-public class MyAdapter extends ArrayAdapter<FeedItem> {
-	public MyAdapter(Context context, List<FeedItem> objects) {
+public class MyAdapter extends ArrayAdapter<FeedItemEntity> {
+	public MyAdapter(Context context, List<FeedItemEntity> objects) {
 		super(context, R.layout.list_item_feed, R.id.title, objects);
 	}
 

@@ -11,18 +11,19 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.example.rssreader.db.FeedItemEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<FeedItem>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<FeedItemEntity>> {
 
     private static final int FEED_LOADER_ID = 1;
     private ListView mListView;
     private MyAdapter mListAdapter;
-
-    // TODO: List<FeedItem> というフィールドmItemListを作成しよう
-    private List<FeedItem> mItemList;
+    private List<FeedItemEntity> mItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,18 +85,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<FeedItem>> onCreateLoader(int id, Bundle args) {
-        FeedAsyncTaskLoader loader = new FeedAsyncTaskLoader(this);
-        return loader;
+    public Loader<List<FeedItemEntity>> onCreateLoader(int id, Bundle args) {
+        return new FeedAsyncTaskLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<FeedItem>> loader, List<FeedItem> data) {
+    public void onLoadFinished(Loader<List<FeedItemEntity>> loader, List<FeedItemEntity> data) {
         mListAdapter.addAll(data);
     }
 
     @Override
-    public void onLoaderReset(Loader<List<FeedItem>> loader) {
+    public void onLoaderReset(Loader<List<FeedItemEntity>> loader) {
 
     }
 }
