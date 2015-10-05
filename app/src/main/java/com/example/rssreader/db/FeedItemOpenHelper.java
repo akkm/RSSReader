@@ -123,4 +123,19 @@ public class FeedItemOpenHelper extends SQLiteOpenHelper {
 
         return count;
     }
+
+    public boolean deleteAll() {
+        boolean result = true;
+        SQLiteDatabase db = null;
+        try {
+            db = getWritableDatabase();
+            // 無条件に全てのレコードを削除する
+            db.delete(TABLE_NAME, null, null);
+        }catch (Exception e) {
+            result = false;
+        } finally {
+            if (db != null) db.close();
+        }
+        return result;
+    }
 }

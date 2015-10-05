@@ -14,29 +14,39 @@ import java.util.List;
  */
 public class FeedCache {
     private Context context;
-    private FeedItemOpenHelper mOpenHelper;
 
     public FeedCache(Context context) {
         this.context = context;
-        mOpenHelper = new FeedItemOpenHelper(context);
     }
 
     /*
     * キャッシュファイルが存在すれば、キャッシュがあるという判断をするメソッド
     * */
     public boolean exists() {
-        return (mOpenHelper.selectAllCount() > 0);
+        FeedItemOpenHelper openHelper = new FeedItemOpenHelper(context);
+        boolean result =(openHelper.selectAllCount() > 0);
+        openHelper.close();
+        return result;
     }
 
     public List<FeedItemEntity> read() {
-        return mOpenHelper.selectAll();
+        FeedItemOpenHelper openHelper = new FeedItemOpenHelper(context);
+        List<FeedItemEntity> result = openHelper.selectAll();
+        openHelper.close();
+        return result;
     }
 
     public void write(String feedString) {
+        FeedItemOpenHelper openHelper = new FeedItemOpenHelper(context);
+
+        // 念のため、既存のレコードは削除しておく
+        openHelper.deleteAll();
+
         FeedFetcher fetcher = new FeedFetcher(context);
-        boolean result = mOpenHelper.insertList(fetcher.parseRss(feedString));
+        boolean result = openHelper.insertList(fetcher.parseRss(feedString));
         if (!result) {
            Log.e("FeedCache.write", "failed to write cache!");
         }
+        openHelper.close();
     }
 }
