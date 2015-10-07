@@ -3,11 +3,9 @@ package com.example.rssreader;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
+import com.example.rssreader.db.FeedItemEntity;
+import com.example.rssreader.db.FeedItemOpenHelper;
+
 import java.util.List;
 
 /**
@@ -17,8 +15,6 @@ import java.util.List;
 public class FeedCache {
     private Context context;
 
-    private static final String CACHE_FILE_NAME = "cache.txt";
-
     public FeedCache(Context context) {
         this.context = context;
     }
@@ -27,44 +23,30 @@ public class FeedCache {
     * キャッシュファイルが存在すれば、キャッシュがあるという判断をするメソッド
     * */
     public boolean exists() {
-        String filepath = context.getCacheDir().getAbsolutePath() + "/" + CACHE_FILE_NAME;
-        File file = new File(filepath);
-        return file.exists();
+        FeedItemOpenHelper openHelper = new FeedItemOpenHelper(context);
+        boolean result =(openHelper.selectAllCount() > 0);
+        openHelper.close();
+        return result;
     }
 
-    public List<FeedItem> read() {
-        List<FeedItem> items = new ArrayList<>();
-
-        try {
-            File file = new File(context.getCacheDir(), CACHE_FILE_NAME);
-            FileInputStream inputStream = new FileInputStream(file);
-
-            byte[] buffer = new byte[inputStream.available()];
-            int result = inputStream.read(buffer);
-            inputStream.close();
-            if (result==-1) {
-                // 最後まで読めなかったら例外を投げる
-                throw new IOException("could not read input stream");
-            }
-
-            // 読み込めたらListView用のデータに変換して返す
-            String text = new String(buffer);
-            FeedFetcher fetcher = new FeedFetcher(context);
-            items = fetcher.parseRss(text);
-        } catch (Exception e) {
-            Log.e("FeedCache.read", e.getMessage());
-        }
-        return items;
+    public List<FeedItemEntity> read() {
+        FeedItemOpenHelper openHelper = new FeedItemOpenHelper(context);
+        List<FeedItemEntity> result = openHelper.selectAll();
+        openHelper.close();
+        return result;
     }
 
     public void write(String feedString) {
-        try {
-            File file = new File(context.getCacheDir(), CACHE_FILE_NAME);
-            FileOutputStream outputStream = new FileOutputStream(file);
-            outputStream.write(feedString.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            Log.e("FeedCache.write", e.getMessage());
+        FeedItemOpenHelper openHelper = new FeedItemOpenHelper(context);
+
+        // 念のため、既存のレコードは削除しておく
+        openHelper.deleteAll();
+
+        FeedFetcher fetcher = new FeedFetcher(context);
+        boolean result = openHelper.insertList(fetcher.parseRss(feedString));
+        if (!result) {
+           Log.e("FeedCache.write", "failed to write cache!");
         }
+        openHelper.close();
     }
 }
