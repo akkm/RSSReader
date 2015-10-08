@@ -2,26 +2,45 @@ package com.example.rssreader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 public class FeedContentActivity extends AppCompatActivity {
-
-
     private static final String TAG = FeedContentActivity.class.getSimpleName();
     public static final String URI_PARAM = "url";
     private String mUrl;
+    private ProgressBar mProgressBar;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_content);
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mActionBar = getSupportActionBar();
+
         WebView webView = (WebView) findViewById(R.id.webView);
-        // TODO: Intentを取得
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                // TODO: ActionBar(mActionBar) に title を設定しよう
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                // TODO: ProgressBar(mProgressBar) に newProgress の値を設定しよう
+            }
+        });
+
+        // TODO: ProgressBar の最大値を 100 に設定しよう
+
         Intent intent = getIntent();
-        // TODO: webViewのloadUrlに受け取ったurlを渡す
         if (intent != null) {
             mUrl = intent.getStringExtra(URI_PARAM);
             webView.loadUrl(mUrl);
