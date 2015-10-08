@@ -30,15 +30,18 @@ public class FeedContentActivity extends AppCompatActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 // TODO: ActionBar(mActionBar) に title を設定しよう
+                mActionBar.setTitle(title);
             }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 // TODO: ProgressBar(mProgressBar) に newProgress の値を設定しよう
+                mProgressBar.setProgress(newProgress);
             }
         });
 
         // TODO: ProgressBar の最大値を 100 に設定しよう
+        mProgressBar.setMax(100);
 
         Intent intent = getIntent();
         if (intent != null) {
