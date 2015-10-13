@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // なければインターネット上から取得する
             getSupportLoaderManager().initLoader(FEED_LOADER_ID, null, this);
         }
+//        mItemList.add(FeedItemEntity.getBuilder()
+//                .setTitle("事件です")
+//                .setDate("2015/10/13 00:00:00")
+//                .build());
     }
 
     @Override
