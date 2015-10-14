@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity
                         .show();
             }
         });
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
+        // Listenerをセット
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
