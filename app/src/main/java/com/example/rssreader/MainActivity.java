@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // TODO: タイトルを設定してみる
-        // TODO: メニューを表示する
+        toolbar.setTitle(R.string.app_name);
+        toolbar.inflateMenu(R.menu.menu_main);
 
         mListView = (ListView) findViewById(R.id.listView);
 
