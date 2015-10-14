@@ -20,7 +20,7 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List<FeedItemEntity>> {
+        implements LoaderManager.LoaderCallbacks<List<FeedItemEntity>>, SwipeRefreshLayout.OnRefreshListener {
 
     private static final int FEED_LOADER_ID = 1;
     private ListView mListView;
@@ -101,11 +101,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<List<FeedItemEntity>> loader, List<FeedItemEntity> data) {
+        mSwipeRefreshLayout.setRefreshing(false);
         mListAdapter.addAll(data);
     }
 
     @Override
     public void onLoaderReset(Loader<List<FeedItemEntity>> loader) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        getSupportLoaderManager().restartLoader(FEED_LOADER_ID,null,this);
     }
 }
