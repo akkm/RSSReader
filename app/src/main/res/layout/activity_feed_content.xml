@@ -1,8 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.example.rssreader.FeedContentActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_dark_material_dark"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <WebView
         android:id="@+id/webView"
@@ -10,14 +20,16 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/toolbar"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
     <ProgressBar
-        style="?android:progressBarStyleHorizontal"
         android:id="@+id/progressBar"
+        android:layout_below="@+id/toolbar"
+        style="?android:progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </RelativeLayout>
