@@ -12,10 +12,16 @@
         android:background="@color/primary_dark_material_dark"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <ListView
-        android:id="@+id/listView"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_below="@+id/toolbar">
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
