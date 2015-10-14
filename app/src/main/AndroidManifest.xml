@@ -21,6 +21,9 @@
         <activity
             android:name=".FeedContentActivity"
             android:label="@string/title_activity_feed_content" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rssreader.MainActivity" />
         </activity>
     </application>
 
