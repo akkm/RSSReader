@@ -36,8 +36,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.inflateMenu(R.menu.menu_main);
-        // ActionBarとして登録
-        setSupportActionBar(toolbar);
+        // menu選択時の動きを設定
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return onOptionsItemSelected(menuItem);
+            }
+        });
 
         mListView = (ListView) findViewById(R.id.listView);
         mItemList = new ArrayList<>();

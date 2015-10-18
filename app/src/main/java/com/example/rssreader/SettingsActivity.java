@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -17,19 +18,13 @@ public class SettingsActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.action_settings);
         setSupportActionBar(toolbar);
 
-        // 戻るボタンを設置
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // 戻るボタンを押したら前の画面に戻る
-            case android.R.id.home:
-             finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        // back buttonを設置
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }
