@@ -17,7 +17,7 @@ public class SettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.preference);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        // デフォルト値をtrueとして設定する
+        // 第2引数にtrueを入れると、デフォルト値をtrueとして設定できる
         boolean cacheEnabled = sharedPreferences.getBoolean(getString(R.string.cache_enabled_key), true);
         SwitchPreference cacheSwitch = (SwitchPreference) findPreference(getString(R.string.cache_enabled_key));
         cacheSwitch.setChecked(cacheEnabled);
@@ -29,6 +29,7 @@ public class SettingsFragment extends PreferenceFragment {
         list.setSummary(list.getEntry());
     }
 
+    // ユーザーが設定を変更した時に実行される処理を定義できる
     private SharedPreferences.OnSharedPreferenceChangeListener onPreferenceChangeListenter = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
