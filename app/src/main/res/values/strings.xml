@@ -5,4 +5,30 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_feed_content">FeedContentActivity</string>
     <string name="share">Share</string>
+    <string name="title_activity_setting">SettingActivity</string>
+
+    <!-- preferences -->
+    <string name="preference_category_app">アプリ設定</string>
+    <string name="cache_enabled_key">cache_enabled</string>
+    <string name="cache_enabled_title">キャッシュ</string>
+    <string name="cache_enabled_summary">前回取得した内容を再利用します</string>
+    <!-- samples of preferences -->
+    <string name="preference_category_sample">その他設定のサンプル</string>
+    <string name="checkbox_key">checkbox</string>
+    <string name="checkbox_title">CheckBoxPreference</string>
+    <string name="checkbox_summary">CheckBoxPreferenceを使った設定</string>
+    <string name="edittext_key">edittext</string>
+    <string name="edittext_title">EditText</string>
+    <string name="edittext_summary">EditTextPreferenceを使った設定</string>
+    <string name="list_key">list</string>
+    <string name="list_title">List</string>
+    <string name="list_summary">ListPreferenceを使った設定</string>
+    <string name="list_dialog_title">List Dialog</string>
+    <string name="list_item1">A</string>
+    <string name="list_item2">B</string>
+    <string name="list_item3">C</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

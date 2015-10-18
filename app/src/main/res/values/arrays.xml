@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="list_entries">
+        <item>@string/list_item1</item>
+        <item>@string/list_item2</item>
+        <item>@string/list_item3</item>
+    </string-array>
+    <string-array name="list_ids">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

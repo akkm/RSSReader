@@ -1,6 +1,8 @@
 package com.example.rssreader;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.example.rssreader.db.FeedItemEntity;
@@ -47,9 +49,15 @@ public class FeedFetcher {
             Response response = client.newCall(request).execute();
             String result = response.body().string();
 
-            // 取得したらキャッシュに書き込む
-            FeedCache cache = new FeedCache(context);
-            cache.write(result);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            // デフォルト値をtrueとして設定する
+            boolean cacheEnabled = sharedPreferences.getBoolean(context.getString(R.string.cache_enabled_key), true);
+
+            if (cacheEnabled==true) {
+                // 取得したらキャッシュに書き込む
+                FeedCache cache = new FeedCache(context);
+                cache.write(result);
+            }
 
             return parseRss(result);
         } catch (IOException e) {
