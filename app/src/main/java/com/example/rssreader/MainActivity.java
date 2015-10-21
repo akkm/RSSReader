@@ -1,17 +1,18 @@
 package com.example.rssreader;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.rssreader.db.FeedItemEntity;
 
@@ -35,25 +36,19 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         toolbar.inflateMenu(R.menu.menu_main);
-
-        mListView = (ListView) findViewById(R.id.listView);
-
-        mItemList = new ArrayList<>();
-
-        mListAdapter = new MyAdapter(this, mItemList);
-
-        mListView.setAdapter(mListAdapter);
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // menu選択時の動きを設定
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), position + 1 + "番目がタップされました", Toast.LENGTH_SHORT)
-                        .show();
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return onOptionsItemSelected(menuItem);
             }
         });
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
-        // Listenerをセット
+        mListView = (ListView) findViewById(R.id.listView);
+        mItemList = new ArrayList<>();
+        mListAdapter = new MyAdapter(this, mItemList);
+        mListView.setAdapter(mListAdapter);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
@@ -61,19 +56,20 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
 
+        // 設定を読み込む
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // デフォルト値をtrueとして設定する
+        boolean cacheEnabled = sharedPreferences.getBoolean(getString(R.string.cache_enabled_key), true);
+
         // キャッシュがあれば利用する
         FeedCache cache = new FeedCache(this);
-        if (cache.exists()) {
+        if (cache.exists() && cacheEnabled) {
             mListAdapter.addAll(cache.read());
-        }
-        else {
+        } else {
             // なければインターネット上から取得する
+            Log.d("DEBUG", "------NO CACHE------");
             getSupportLoaderManager().initLoader(FEED_LOADER_ID, null, this);
         }
-//        mItemList.add(FeedItemEntity.getBuilder()
-//                .setTitle("事件です")
-//                .setDate("2015/10/13 00:00:00")
-//                .build());
     }
 
     @Override
@@ -92,6 +88,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // Settings を選択したらlSettingActivityを表示する
+            Intent intent = new android.content.Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -116,6 +115,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRefresh() {
-        getSupportLoaderManager().restartLoader(FEED_LOADER_ID,null,this);
+        getSupportLoaderManager().restartLoader(FEED_LOADER_ID, null, this);
     }
 }

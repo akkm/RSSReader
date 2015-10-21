@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/preference_category_app">
+        <SwitchPreference
+            android:key="@string/cache_enabled_key"
+            android:summary="@string/cache_enabled_summary"
+            android:title="@string/cache_enabled_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preference_category_sample">
+        <CheckBoxPreference
+            android:key="@string/checkbox_key"
+            android:summary="@string/checkbox_summary"
+            android:title="@string/checkbox_title" />
+        <EditTextPreference
+            android:key="@string/edittext_key"
+            android:maxLength="20"
+            android:title="@string/edittext_title"
+            android:dialogTitle="@string/edittext_summary" />
+        <ListPreference
+            android:key="@string/list_key"
+            android:title="@string/list_title"
+            android:summary="@string/list_summary"
+            android:entries="@array/list_entries"
+            android:entryValues="@array/list_ids"
+            android:dialogTitle="@string/list_dialog_title" />
+    </PreferenceCategory>
+</PreferenceScreen>
