@@ -3,7 +3,9 @@ package com.example.rssreader;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,24 +13,28 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import com.example.rssreader.db.FeedItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<FeedItemEntity>> {
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<List<FeedItemEntity>>, SwipeRefreshLayout.OnRefreshListener {
 
     private static final int FEED_LOADER_ID = 1;
     private ListView mListView;
     private MyAdapter mListAdapter;
     private List<FeedItemEntity> mItemList;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.inflateMenu(R.menu.menu_main);
 
         mListView = (ListView) findViewById(R.id.listView);
 
@@ -45,6 +51,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                         .show();
             }
         });
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
+        // Listenerをセット
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -60,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // なければインターネット上から取得する
             getSupportLoaderManager().initLoader(FEED_LOADER_ID, null, this);
         }
+//        mItemList.add(FeedItemEntity.getBuilder()
+//                .setTitle("事件です")
+//                .setDate("2015/10/13 00:00:00")
+//                .build());
     }
 
     @Override
@@ -91,11 +105,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<FeedItemEntity>> loader, List<FeedItemEntity> data) {
+        mSwipeRefreshLayout.setRefreshing(false);
         mListAdapter.addAll(data);
     }
 
     @Override
     public void onLoaderReset(Loader<List<FeedItemEntity>> loader) {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        getSupportLoaderManager().restartLoader(FEED_LOADER_ID,null,this);
     }
 }

@@ -2,8 +2,8 @@ package com.example.rssreader;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
@@ -15,7 +15,6 @@ public class FeedContentActivity extends AppCompatActivity {
     public static final String URI_PARAM = "url";
     private String mUrl;
     private ProgressBar mProgressBar;
-    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,24 +22,30 @@ public class FeedContentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed_content);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mActionBar = getSupportActionBar();
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.inflateMenu(R.menu.menu_feed_content);
+        toolbar.getMenu().findItem(R.id.share).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return FeedContentActivity.this.onOptionsItemSelected(item);
+            }
+        });
 
         WebView webView = (WebView) findViewById(R.id.webView);
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
-                // TODO: ActionBar(mActionBar) に title を設定しよう
-                mActionBar.setTitle(title);
+                toolbar.setTitle(title);
             }
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-                // TODO: ProgressBar(mProgressBar) に newProgress の値を設定しよう
                 mProgressBar.setProgress(newProgress);
             }
         });
 
-        // TODO: ProgressBar の最大値を 100 に設定しよう
         mProgressBar.setMax(100);
 
         Intent intent = getIntent();
