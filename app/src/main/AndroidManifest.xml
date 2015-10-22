@@ -29,6 +29,8 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_setting" >
         </activity>
+        <activity android:name=".lesson25.Lesson25Activity" >
+        </activity>
     </application>
 
 </manifest>

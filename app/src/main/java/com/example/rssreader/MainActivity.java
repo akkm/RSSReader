@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.rssreader.db.FeedItemEntity;
+import com.example.rssreader.lesson25.Lesson25Activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +91,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             // Settings を選択したらlSettingActivityを表示する
             Intent intent = new android.content.Intent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_lesson25) {
+            Intent intent = new Intent(this, Lesson25Activity.class);
             startActivity(intent);
             return true;
         }
