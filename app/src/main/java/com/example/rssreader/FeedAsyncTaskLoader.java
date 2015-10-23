@@ -12,8 +12,10 @@ import java.util.List;
  * Created by Hideyuki.Kikuma on 15/09/02.
  */
 public class FeedAsyncTaskLoader extends AsyncTaskLoader<List<FeedItemEntity>> {
-    public FeedAsyncTaskLoader(Context context) {
+    private String mUrl;
+    public FeedAsyncTaskLoader(Context context, String url) {
         super(context);
+        mUrl = url;
     }
 
     @Override
@@ -24,6 +26,6 @@ public class FeedAsyncTaskLoader extends AsyncTaskLoader<List<FeedItemEntity>> {
 
     @Override
     public List<FeedItemEntity> loadInBackground() {
-        return new FeedFetcher(getContext()).fetch();
+        return new FeedFetcher(getContext(), mUrl).fetch();
     }
 }
