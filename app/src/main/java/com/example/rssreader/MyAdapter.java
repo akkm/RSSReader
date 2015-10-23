@@ -2,6 +2,8 @@ package com.example.rssreader;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -31,7 +33,13 @@ public class MyAdapter extends ArrayAdapter<FeedItemEntity> {
 		final FeedItem item = getItem(position);
 
 		title.setText(item.getTitle());
-		description.setText(item.getDescription());
+		if (item.getDescription() != null) {
+			Spanned descSpanned = Html.fromHtml(item.getDescription());
+			description.setVisibility(View.VISIBLE);
+			description.setText(descSpanned);
+		} else {
+			description.setVisibility(View.GONE);
+		}
 		category.setText(item.getCategory());
 		date.setText(item.getDate());
 		view.setOnClickListener(new View.OnClickListener() {
