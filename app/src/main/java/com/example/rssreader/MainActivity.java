@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity
 
     private List<RSSFeedUrlEntity> mUrlEntities;
     private ArrayAdapter<RSSFeedUrlEntity> mUrlAdapter;
+    private RSSFeedUrlEntity mLastSelectedUrlEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +123,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRefresh() {
-        getSupportLoaderManager().restartLoader(FEED_LOADER_ID, null, this);
+        if (mLastSelectedUrlEntity == null) return;
+        fetch(mLastSelectedUrlEntity.getUrl());
     }
 
     private void fetch(String url) {
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 RSSFeedUrlEntity entity = mUrlEntities.get(position);
+                mLastSelectedUrlEntity = entity;
                 mListAdapter.clear();
                 fetch(entity.getUrl());
             }
