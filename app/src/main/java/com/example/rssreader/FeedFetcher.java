@@ -28,9 +28,20 @@ public class FeedFetcher {
     private Context context;
 
     private static final String RSS_URL = "http://news.yahoo.co.jp/pickup/computer/rss.xml";
+    private String mUrl;
 
     public FeedFetcher(Context context) {
         this.context = context;
+        mUrl = RSS_URL;
+
+    }
+
+    public FeedFetcher(Context context, String url) {
+        this.context = context;
+        mUrl = url;
+        if (mUrl == null) {
+            mUrl = RSS_URL;
+        }
     }
 
     /**
@@ -40,7 +51,7 @@ public class FeedFetcher {
      */
     public List<FeedItemEntity> fetch() {
         Request request = new Request.Builder()
-                .url(RSS_URL)
+                .url(mUrl)
                 .get()
                 .build();
         OkHttpClient client = new OkHttpClient();
@@ -55,8 +66,8 @@ public class FeedFetcher {
 
             if (cacheEnabled==true) {
                 // 取得したらキャッシュに書き込む
-                FeedCache cache = new FeedCache(context);
-                cache.write(result);
+//                FeedCache cache = new FeedCache(context);
+//                cache.write(result);
             }
 
             return parseRss(result);
